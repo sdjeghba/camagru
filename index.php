@@ -1,13 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Camagru</title>
-</head>
+<?php require "navbar.php"; ?>
+
 <body>
-    <?php require "navbar.php"; ?>
+    <div class="container-fluid">
+        <div class="row justify-content-end mx-5">
+            <p>Vous n'avez pas de compte ? Cliquer ici pour vous inscrire!</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-7 mx-3 my-4" style="background-color:grey">
+                <h2 style="text-align:center">Prenez vous en photo!</h2>
+                One.
+            </div>
+            <div class="col-4 mx-3 my-4" style="background-color:red">
+                <h2 style="text-align:center">Vos dernières photos prises</h2>
+                Two.
+            </div>
+        </div>
+    </div>
 </body>
-</html>
+
+<?php require "footer.php"; ?>
