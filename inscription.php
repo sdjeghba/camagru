@@ -11,15 +11,14 @@ if (!empty($_POST)) {
         ViewsMsg::alert_message("E-mail ou mot de passe manquant", "danger");
     }
     else: {
-        $username = htmlentities($_POST['mail']);
-        $password = password_hash($_POST['pwd'], PASSWORD_DEFAULT);
-        $key_mail = md5(microtime(TRUE)*10000);
-        $active = 0;
-        $user = new User($username, $password);
-        //var_dump($user);
-        if ($user->sign_in(['username', 'password', 'mail_key', 'active'], [$username, $password. $key_mail, $active], 'users') == FALSE) {
-            ViewsMsg::alert_message("Nom d'utilisateurs déjà pris veuillez en choisir un autre", "danger");
-            
+        $username = htmlspecialchars($_POST['usrname']);
+        $usrmail = htmlspecialchars($_POST['mail']);
+        // $password = password_hash($_POST['pwd'], PASSWORD_DEFAULT);
+        // $key_mail = md5(microtime(TRUE)*10000);
+        // $active = 0;
+        // $user = new User($username, $password);
+        // if ($user->sign_in(['username','mail','password', 'mail_key', 'active'], [$username, $usrmail, $password. $key_mail, $active], 'users') == FALSE) {
+        //     ViewsMsg::alert_message("Nom d'utilisateurs déjà pris veuillez en choisir un autre", "danger");
         }
         ViewsMsg::alert_message("we're here", "success");
     }

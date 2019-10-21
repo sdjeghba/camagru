@@ -46,8 +46,6 @@ class HandleDb extends DbInfos {
             $v .= ",?";
         }
         $str = implode(', ', $fields);
-        var_dump($str);
-        var_dump($v);
         $pdo = self::db_connect();
         $sql = "INSERT INTO $table ($str) VALUES ($v)";
         $pdo->prepare($sql)->execute($values);
@@ -58,6 +56,7 @@ class HandleDb extends DbInfos {
         $users_table = "CREATE TABLE `users` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `username` varchar(255) NOT NULL,
+            `usrmail` varchar(255) NOT NULL,
             `password` varchar(255) NOT NULL,
             `mail_key` varchar(255) NOT NULL,
             `active` int(11) NOT NULL,
