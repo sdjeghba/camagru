@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "config/DbInfos.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "App/ViewsMsg.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/ViewsMsg.php";
 
 /*
 
@@ -29,13 +29,19 @@ class HandleDb extends DbInfos {
     }
 
     public function db_connect(): PDO {
-        $pdo = self::sql_connect(";dbname=".$this->db_name);
-        return $pdo;
+        try {
+            $pdo = self::sql_connect(";dbname=".$this->db_name);
+        }
+        catch (PDOException $e)
+        {
+            die($e->getMessage());
+        }
+            return $pdo;
     }
 
-    private function database_exist($pdo){ 
-        $instructions = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'camagru'";
-        $query = $pdo->query($instructions);
+    private function database_exist($pdo){
+        $query = $pdo->prepare("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?");
+        $query->execute(array($this->db_name));
         return $query->fetch();
     }
 

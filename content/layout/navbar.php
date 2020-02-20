@@ -8,12 +8,12 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/content/css/bootstrap.css"">
     <title>Camagru</title>
 </head>
 <nav class="navbar navbar-dark bg-dark">
     <a href="/index.php" class="navbar-brand">
-        <img src="/src/img/camera.png" width="30" height="30" alt="icon camera" class="d-inline-block align-top">
+        <img src="/content/images//camera.png" width="30" height="30" alt="icon camera" class="d-inline-block align-top">
         Camagru
     </a>
     <?php
@@ -35,7 +35,7 @@ HTML;
     else: {
         echo <<<HTML
             <p class="text-success px-4 my-auto">Connecté
-            <img src="src/img/user.png" width="30" height="30" alt="icon camera" class="d-inline-block align-top mx-3">
+            <img src="content/images//user.png" width="30" height="30" alt="icon camera" class="d-inline-block align-top mx-3">
             <a href="logout.php" class="btn btn-danger">Se déconnecter</a>
             </p>
 HTML;

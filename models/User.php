@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "App/HandleDb.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/HandleDb.php";
 
 
 class User extends HandleDB{
@@ -19,8 +19,9 @@ class User extends HandleDB{
     }
 
     public function get_mail_key($login) :string {
-        $sql = $this->pdo->query("SELECT * FROM users WHERE username = '{$login}'");
-        $userbox = $sql->fetch(PDO::FETCH_OBJ);
+        $query = $this->pdo->prepare("SELECT * FROM users WHERE username = ?");
+        $query->execute(array($login));
+        $userbox = $query->fetch(PDO::FETCH_OBJ);
         return $userbox->mail_key;
     }
 
@@ -28,7 +29,7 @@ class User extends HandleDB{
         if ($mail_key == NULL) {
             $mail_key = self::get_mail_key($this->user_login);
         }
-        $recipient = $this->user_login;
+        $recipient = $this->user_mail;
         $active = 0;
         $subject = "Activer votre compte";
         $mail_header = "From : inscription@camagru.com";
@@ -36,11 +37,14 @@ class User extends HandleDB{
         Pour activer votre compte, veuillez cliquer sur le lien ci dessous
         ou copier/coller dans votre navigateur internet.
 
-        localhost:8888/validation_mail.php/?log='.urlencode($this->user_login).'&mail_key='.urlencode($mail_key).'
+        localhost:8888/controllers/validation_mail.php/?log='.urlencode($this->user_login).'&mail_key='.urlencode($mail_key).'
  
         ---------------
         Ceci est un mail automatique, Merci de ne pas y repondre.';
         mail($recipient, $subject, $message, $mail_header);
+        $str = 'localhost:8888/controllers/validation_mail.php/?log='.urlencode($this->user_login).'&mail_key='.urlencode($mail_key);
+        echo $str;
+
     }
 
     public function validation_mail(string $login, string $mail_key): int {
@@ -48,7 +52,8 @@ class User extends HandleDB{
             return 1;
         if (self::get_mail_key($login) != $mail_key)
             return 2;
-        $this->pdo->query("UPDATE users SET active = '1' WHERE username = '{$login}'");
+        $query = $this->pdo->prepare("UPDATE users SET active = '1' WHERE username = ?");
+        $query->execute(array($login));
         return 0;
     }
 
@@ -80,10 +85,10 @@ class User extends HandleDB{
     }
 
     public function mail_exist() : bool {
-        $sql = $this->pdo->query('SELECT mail FROM users');
+        $sql = $this->pdo->query('SELECT usrmail FROM users');
         $tab = $sql->fetchall(PDO::FETCH_OBJ);
         foreach ($tab as $row): {
-            if ($this->user_mail == $row->mail)
+            if ($this->user_mail == $row->usrmail)
                 return TRUE;
         }
         endforeach;

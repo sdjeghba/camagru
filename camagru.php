@@ -1,10 +1,7 @@
-<?php require "navbar.php" ?>
+<?php require_once __DIR__ . "/content/layout/navbar.php" ?>
 
 <body>
     <div class="container-fluid">
-        <div class="row justify-content-end mx-5">
-        <a href="inscription.php">Vous n'avez pas de compte ? Cliquer ici pour vous inscrire!</a>
-        </div>
         <div class="row justify-content-center">
             <div class="col-7 mx-3 my-4" style="background-color:grey">
                 <h2 style="text-align:center">Prenez vous en photo!</h2>
@@ -18,4 +15,4 @@
     </div>
 </body>
 
-<?php require "footer.php"?>
+<?php require_once __DIR__ . "/content/layout/footer.php"?>

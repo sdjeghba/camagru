@@ -1,14 +1,22 @@
 <?php
-require __DIR__ . DIRECTORY_SEPARATOR . "navbar.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR ."App/User.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR ."App/HandleDb.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR ."App/ViewsMsg.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "content/layout/navbar.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/User.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/HandleDb.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/ViewsMsg.php";
 
+
+/*
+By validation_mail method in User.php check if the user already exist and if the key is true,
+if it's ok set active to 1 in database and the inscription is valid.
+Or resend mail validation.
+Or errors_messages.
+
+*/
 if (!empty($_GET)) {
     if (!empty($_GET['log']) && !empty($_GET['mail_key'])) {
         $username = htmlspecialchars(urldecode($_GET['log']));
         $mail_key = htmlspecialchars(urldecode($_GET['mail_key']));
-        $user = new User($username, "");
+        $user = new User($username, "", "");
         $return = $user->validation_mail($username, $mail_key);
         if ($return) {
             if ($return == 1) 
@@ -22,7 +30,7 @@ if (!empty($_GET)) {
                             <div class="card-body justify-content-center">
                                 <p class="font-italic">Renvoyer un mail de confirmation:</p> 
                             </div>
-                            <a href="/resend_mail.php?log=$username" class="btn btn-primary my-4 mx-4">Valider</a>             
+                            <a href="/controllers/resend_mail.php?log=$username" class="btn btn-primary my-4 mx-4">Valider</a>             
                         </div>        
                     </div>
               </div>
