@@ -1,0 +1,12 @@
+#webcam_container {
+    text-align:center;
+	margin: 0px auto;
+	width: 90%;
+	height: 90%;
+	border: 10px #333 solid;
+}
+#videoElement {
+	width: 90%;
+	height: 90%;
+	background-color: #666;
+}

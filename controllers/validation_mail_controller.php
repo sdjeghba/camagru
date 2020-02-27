@@ -3,7 +3,7 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "content/layout/navbar.php
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/User.php";
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/HandleDb.php";
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/ViewsMsg.php";
-
+$_SESSION['online'] = 0;
 
 /*
 By validation_mail method in User.php check if the user already exist and if the key is true,
@@ -12,17 +12,22 @@ Or resend mail validation.
 Or errors_messages.
 
 */
+$username_error = 0;
+$password_error = 0;
+
 if (!empty($_GET)) {
     if (!empty($_GET['log']) && !empty($_GET['mail_key'])) {
         $username = htmlspecialchars(urldecode($_GET['log']));
         $mail_key = htmlspecialchars(urldecode($_GET['mail_key']));
         $user = new User($username, "", "");
         $return = $user->validation_mail($username, $mail_key);
+
         if ($return) {
             if ($return == 1) 
                 ViewsMsg::alert_message("L'utilisateur n'existe pas dans notre base de donneée veuillez vous inscrire", "danger");
             else {
                 ViewsMsg::alert_message("Problème lors de la confirmation par mail veuillez redemander un mail de confirmation", "danger");
+                if ($_SESSION['online'] == 1): {
                 echo <<<HTML
                 <div class="container justify-content-center">
                     <div class="row justify-content-center">
@@ -35,6 +40,11 @@ if (!empty($_GET)) {
                     </div>
               </div>
 HTML;
+                }
+                else: {
+                    ViewsMsg::alert_message("Veuillez vous connectez afin de reçevoir un nouveau mail de confirmation", "danger");
+                }
+                endif;
             }
         }
         else

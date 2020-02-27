@@ -13,7 +13,7 @@ if (isset($_GET) && !empty($_GET['log'])): {
         header("Refresh: 5; url='index.php'");
     }
     else: {
-        $user->send_mail(NULL);
+        $user->send_validation_mail(NULL);
         ViewsMsg::alert_message("Consulter vos mails et cliquez sur le lien de validation de compte!", "success");
     }
     endif;

@@ -13,7 +13,7 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/ViewsMsg.php";
 
 class HandleDb extends DbInfos {
 
-    public function sql_connect($database_name = ''): PDO {
+    private function sql_connect($database_name = ''): PDO {
         try {
             $pdo = new PDO('mysql:host='.$this->host.$database_name, $this->username, $this->password, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -39,13 +39,13 @@ class HandleDb extends DbInfos {
             return $pdo;
     }
 
-    private function database_exist($pdo){
+    public function database_exist($pdo){
         $query = $pdo->prepare("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?");
         $query->execute(array($this->db_name));
         return $query->fetch();
     }
 
-    public function insert_into(array $fields, array $values, string $table) {
+    protected function insert_into(array $fields, array $values, string $table) {
         $entries = count($fields) - 1;
         $v = "?";
         for ($i = 0; $i < $entries; $i++) {
@@ -57,13 +57,26 @@ class HandleDb extends DbInfos {
         $pdo->prepare($sql)->execute($values);
     }
 
+    protected function if_value_exist(string $field, string $to_find, string $table) {
+        $sql = "SELECT $field FROM $table";
+        $query = $this->pdo->query($sql);
+        $array = $query->fetchAll(PDO::FETCH_OBJ);
+        foreach ($array as $row): {
+            if ($to_find == $row->$field) {
+                return TRUE;
+            }
+        }
+        endforeach;
+        return FALSE;
+    }
+
     private function create_tables(){
         $pdo = self::db_connect();
         $users_table = "CREATE TABLE `users` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `username` varchar(255) NOT NULL,
             `usrmail` varchar(255) NOT NULL,
-            `password` varchar(255) NOT NULL,
+            `userpassword` varchar(255) NOT NULL,
             `mail_key` varchar(255) NOT NULL,
             `active` int(11) NOT NULL,
             PRIMARY KEY (`id`)

@@ -14,7 +14,8 @@
                             <label for="username">Non utilisateur : </label>
                             <input type="text" class="form-control" id="username" name="usrname" placeholder="Choisir un nom d'utilisateur" value="" required>
                         </div>
-                        <?php $pseudo_error == 1 ? ViewsMsg::alert_message("Pseudo déjà utiliseé choisissez une autre", "danger") : 0; ?>
+                        <?php $pseudo_error == 0 ? ViewsMsg::alert_message("Caractères autorisés : chiffres, lettres et - ", "danger") : 0; ?>
+                        <?php $pseudo_taken == 1 ? ViewsMsg::alert_message("Pseudo déjà utilisé choisissez une autre", "danger") : 0; ?>
                         <div class="form-group">
                             <label for="mail1">Adresse mail : </label>
                             <input type="email" class="form-control" id="mail1" name="mail" placeholder="Entrez votre email" value="" required>

@@ -5,7 +5,9 @@ require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/User.php";
 require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/HandleDb.php";
 require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/ViewsMsg.php";
 require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/Form.php";
-
+if (!empty($_SESION['online'])) {
+    var_dump($_SESSION['online']);
+}
 ?>
 
 <body>

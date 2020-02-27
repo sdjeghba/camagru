@@ -3,13 +3,28 @@
 <body>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-7 mx-3 my-4" style="background-color:grey">
-                <h2 style="text-align:center">Prenez vous en photo!</h2>
-                One.
+            <div class="col-8 mx-4 my-4 text-center">
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">
+                     Prenez vous en photo !
+                    </div>
+                    <div class="card-body" id="webcam_container">
+                        <video autoplay="true" id="videoElement">
+                            <script src="/webcam.js"></script>
+                        </video>
+                        <button id="startbutton">Take photo</button>
+                    </div>  
+                </div>
             </div>
-            <div class="col-4 mx-3 my-4" style="background-color:red">
-                <h2 style="text-align:center">Vos dernières photos prises</h2>
-                Two.
+            <div class="col-3 mx-3 my-4 text-center">
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">
+                     Vos dernières prises photos
+                    </div>
+                    <div class="card-body">
+                        <p class="success">Done!</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
