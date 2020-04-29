@@ -118,7 +118,9 @@ class User extends HandleDB{
         return (self::get_user_information($this->user_login, "active") == 1 ? TRUE : FALSE);
     }
 
-    public function sign_in(array $fields, array $values, string $table) {
+    public function sign_in(array $values) {
+        $fields = ['username', 'usrmail', 'userpassword', 'mail_key', 'active'];
+        $table = 'users';
         $this->insert_into($fields, $values, $table);
     }
 

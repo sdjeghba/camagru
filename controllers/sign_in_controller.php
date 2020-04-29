@@ -38,7 +38,7 @@ if (empty($_SESSION['online'])): {
             $pseudo_error = preg_match("`^[a-z0-9](-?[a-z0-9])*$`", $username) ? 1 : 0;
 
             if (!$mail_error && $pseudo_error && !$mdp_error && !$pseudo_taken) {
-                $user->sign_in(['username', 'usrmail', 'userpassword', 'mail_key', 'active'], [$username, $usrmail, $password, $mail_key, 0], 'users');
+                $user->sign_in([$username, $usrmail, $password, $mail_key, 0]);
                 $user->send_validation_mail($mail_key);
                 ViewsMsg::alert_message("Félicitation, il ne vous reste plus qu'à valider votre compte via le lien reçu sur votre boite mail", "success");
             }

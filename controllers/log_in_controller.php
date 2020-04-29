@@ -32,6 +32,7 @@ if (!empty($_POST)) {
             else: {
                 ViewsMsg::alert_message("Vous êtes désormais connecté, vous allez être redigiré vers l'acceuil", "success");
                 $_SESSION['online'] = 1;
+                $_SESSION['username'] = $username;
                 ViewsMsg::index_redirection();
             }
             endif;

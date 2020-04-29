@@ -1,20 +1,167 @@
+/*
+	Webcam page;
+*/
 
-.webcam_container {
-	/* border:5px solid #222; */
-	margin:0px auto;
-	max-height: 495px;
-	max-width:660px;
+.webcam {
+	margin:auto;
+	position:relative;
+	min-width: 320px;
+	min-height: 240px;
 }
 
-.canvas {
-	border: 1px solid #222;
-	background: grey;
-	height:100px;
-	width:130px;
+img.pngfont {
+	position:absolute;
+	margin:auto;
+	width: 320px;
+	height: 240px;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
 }
 
-#videoElement {
+canvas {
+	width:100%;
+	height:100%;
+	max-width: 320px;
+	max-height: 240px;
+	margin: 10px auto;
+	background-color: #fff;
+	border: 1px solid #babbbd;
+	padding: 10px;
+	box-shadow: 1px 1px 1px #babbbd;
+	margin: 10px auto 0;
+	border: 1px solid #babbbd;
+}
+
+img.miniature {
 	width: 100%;
+	max-width: 96px;
 	height: 100%;
-	background-color: #666;
+	max-height: 72px;
+	margin:3px;
+}
+
+/* 
+	Modal;
+*/
+
+.modal {
+    position: fixed;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    animation: fade-in .3s both;
+}
+
+.modal-wrapper {
+    display:flex;
+    justify-content:center;
+    overflow: auto;
+    width:400px;
+    min-width: 340px;
+    height: 100%;
+    padding:20px;
+    background-color:#FFF;
+    animation: slide-top .5sec both;
+}
+
+.js-modal-close {
+    position: relative;
+    float:right;
+    font-size: 1.5rem;
+    padding: 1rem;
+}
+
+.inputcomment {
+	font-size: 0.7rem;
+	outline:none;
+	border: 1px solid #ccc;
+	margin-top: 0.5rem;
+	width: 100%;
+	height: 1.7rem;
+}
+
+#card-size {
+	max-width: 320px;
+	word-break: break-all;
+}
+
+.img-card {
+	width:100%;
+}
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
+} 
+
+@keyframes slide-top {
+    from {transform: translateY(-50px);}
+    to {transform: translateY(0px);}
+}
+
+
+/*
+	Police and pictures etc..;
+*/
+
+.like-police {
+	font-style: italic;
+	font-size: 0.9rem;
+}
+
+img.comment {
+	margin-top:2px;
+	max-width: 21px;
+	max-height: 21px;
+}
+
+.like {
+	outline:none;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+p.comment {
+	font-size: 0.9rem;
+	margin: 0.5rem;
+}
+
+b {
+	font-style: italic;
+	color:blue ;
+}
+
+.comment-police {
+	font-size:0.9rem;
+	font-style: italic;
+}
+
+a.comment-link {
+	font-style:italic;
+	font-size: 0.8rem;
+	text-align:center;
+}
+
+.delete_button {
+	background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+	outline:none;
+	position:absolute ;
+	margin:10px;
+}
+
+.arrow {
+	margin-left:20px;
+	margin-right:20px;
 }

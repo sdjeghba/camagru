@@ -6,8 +6,7 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/ViewsMsg.php";
 
     This class handle all database method, called by the setup.php, it create
     the database and tables.
-    But not only, the different method offer an object for simply make request for
-    work with the database, insert,delete...
+    But not only, the different method offer an object for simply make request for insert, delete..
 
 */
 
@@ -82,6 +81,29 @@ class HandleDb extends DbInfos {
             PRIMARY KEY (`id`)
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
         $pdo->prepare($users_table)->execute();
+
+        $pictures = "CREATE TABLE IF NOT EXISTS `pictures` (
+            `id_picture` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            `username` VARCHAR(30) NOT NULL,
+            `creation_date` DATETIME NOT NULL,
+            `picture` LONGBLOB NOT NULL)";
+            $pdo->exec($pictures);
+
+        $likes = "CREATE TABLE IF NOT EXISTS `likes` (
+            `id_like` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            `id_picture` INT UNSIGNED NOT NULL,
+            `username` VARCHAR(30) NOT NULL,
+            `creation_date` DATETIME NOT NULL)";
+            $pdo->exec($likes);
+              
+        $comments = "CREATE TABLE IF NOT EXISTS `comments` (
+        `id_comment` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `id_picture` INT UNSIGNED NOT NULL,
+        `comment` VARCHAR(255) NOT NULL,
+        `username` VARCHAR(30) NOT NULL,
+        `creation_date` DATETIME NOT NULL)";
+        $pdo->exec($comments);
+
     }
 
     public function create_database(){

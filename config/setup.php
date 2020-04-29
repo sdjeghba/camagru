@@ -5,5 +5,8 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "config/DbInfos.php";
 
 $db = new HandleDb();
 $db->create_database();
+// require_once dirname(__DIR__) . "/controllers/logout.php";
+session_destroy();
+// header ("Location: /index.php");
 
 ?>

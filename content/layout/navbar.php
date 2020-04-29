@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+<?php session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -35,10 +33,19 @@ HTML;
     }
     else: {
         echo <<<HTML
-            <p class="text-success px-4 my-auto">Connecté
-            <a href="/controllers/account_controller.php"><img src="/content/images/user.png" width="30" height="30" alt="icon camera" class="d-inline-block align-top mx-3"></a>
-            <a href="/controllers/logout.php" class="btn btn-danger">Se déconnecter</a>
-            </p>
+        <div class="navbar-expand">
+            <ul class="navbar-nav navbar-expand-lg ">
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="/camagru.php">Photomaton</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="/my_gallery.php">Album</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a href="/controllers/logout.php" class="btn btn-danger">Déconnexion</a></p>
+                </li>
+             </ul>
+    </div>         
 HTML;
     }
     endif; ?>
