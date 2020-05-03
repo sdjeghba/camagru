@@ -68,7 +68,7 @@ HTML;
                     <div id="card-size" class="card-sm mx-2 my-3 border border-black">
                         <img class="img-card" src="data:image/jpeg;base64,<?= base64_encode($value['picture']) ?>"/>
                         <div class="card-body">
-                        <?php  if (!empty($_SESSION) && $_SESSION['username']) {
+                        <?php  if (!empty($_SESSION) && !empty($_SESSION['username'])) {
                                 if (!$liked): { ?>
                                     <button onclick="addLike(<?= $id_pic ?>)" class="like" ><img id=like_<?= $id_pic ?> src="/content/images/unliked.png"/></button><?php
                                 }

@@ -33,13 +33,16 @@ HTML;
     }
     else: {
         echo <<<HTML
-        <div class="navbar-expand">
+        <div class="navbar">
             <ul class="navbar-nav navbar-expand-lg ">
                 <li class="nav-item mx-2">
                     <a class="nav-link" href="/camagru.php">Photomaton</a>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="nav-link" href="/my_gallery.php">Album</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="/account.php">Profil</a>
                 </li>
                 <li class="nav-item mx-2">
                     <a href="/controllers/logout.php" class="btn btn-danger">Déconnexion</a></p>

@@ -8,10 +8,7 @@ if (empty($_SESSION))
 else {
     if (empty($_SESSION['online']))
         ViewsMsg::alert_message("Vous n'êtes pas autorisé à acceder à cette page", "danger");
-    else {
-        echo "connected = " . $_SESSION['online'];
-        echo "connected = " . $_SESSION['username'];
-?>
+    else {?>
 
 <body>
     <div class="container-fluid">
@@ -30,15 +27,16 @@ else {
                             <canvas id="canvas" width="320px" height="240px"></canvas>
                         </div>
                         <button id="photo-button" class="btn btn-primary" disabled>Capture</button>
-                            <button id="save-button" class="btn btn-primary">Sauvegarder</button>
-                            <form id="choices">
-                            <input type="radio" id="img1" name="choice" onclick="radio_selected(1)">
-                            <label for="img1">One</label>
-                            <input type="radio" id="img2" name="choice" onclick="radio_selected(2)">
-                            <label for="img2">Eyes</label>
-                            <input type="radio" id="img3" name="choice" onclick="radio_selected(3)">
-                            <label for="img3">Dragon ball</label>
-                            </form>
+                        <button id="save-button" class="btn btn-primary">Sauvegarder</button>
+                        <form id="choices">
+                        <label for="choices">Filtres :</label>
+                        <input type="radio" id="img1" name="choice" onclick="radio_selected(1)">
+                        <label for="img1">One</label>
+                        <input type="radio" id="img2" name="choice" onclick="radio_selected(2)">
+                        <label for="img2">Eyes</label>
+                        <input type="radio" id="img3" name="choice" onclick="radio_selected(3)">
+                        <label for="img3">Dragon ball</label>
+                        </form>
                     </div>
                     <p class="">Vous pouvez aussi télécharger une photo</p>
                     <label class="file" title="">
@@ -52,12 +50,15 @@ else {
                     <div class="card-header bg-primary text-white">
                      Vos dernières prises photos
                     </div>
-                    <div id="side" class="card-body">
+                    <div id="side" class="card-body display_min">
                     <?php
                         $pic = new Pictures("", $_SESSION['username'], "");
                         $tab = $pic->getPicturesConstraints(20, FALSE, 0, TRUE);
                         foreach ($tab as $value): ?>
-                        <img class="miniature" src="data:image/jpeg;base64,<?= base64_encode($value['picture']) ?>"/>
+                        <div class="display_min">
+                            <img onclick="deletePicture(<?= $value['id_picture'] ?>)" id="delete_<?= $value['id_picture'] ?>" src="redcross.png" alt="" class="delete_picture"/>
+                            <img class="miniature" src="data:image/jpeg;base64,<?= base64_encode($value['picture']) ?>"/>
+                        </div>
                     <?php endforeach; ?>
                     </div>
                 </div>
@@ -66,6 +67,7 @@ else {
     </div>    
 </body>
 
+<script src="gallery.js"></script>
 <script src="webcam.js"></script>
 <?php require_once __DIR__ . "/content/layout/footer.php"?>
-<?php }} ?>
+<?php }}?>

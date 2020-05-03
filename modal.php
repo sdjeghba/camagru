@@ -10,13 +10,13 @@
                         else: { ?>
                             <button onclick="addLike(<?= $id_pic ?>)" class="like" ><img id=modal_like_<?= $id_pic ?> src="/content/images/liked.png"/></button><?php
                         }
-                        endif;
+                        endif;?>
+                        <span class="like-police" id="modal_likes_number_<?= $id_pic ?>"><?= $number_like ?> j'aime </span><?php
                     }
                     endif;
                 ?>
                 <img class="comment" src="/content/images/comment.png"/>
                 <span id="modal_comments_n_<?= $id_pic ?>" class="comment-police"><?= $number_comments ?> commentaires</span>
-                <span class="like-police" id="modal_likes_number_<?= $id_pic ?>"><?= $number_like ?> j'aime </span>
                 <h5 class="card-title my-2 center">Commentaires</h5>
                 <div class="card-text" id="first_comment_<?= $id_pic ?>">
                     <?php foreach ($comments as $row): {?>

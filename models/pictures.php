@@ -113,4 +113,16 @@ class Pictures extends HandleDb {
       die($e->getMessage());
     }
   }
+
+  public function changeUsername(string $oldusername, $newusername) {
+    try {
+      $sql = "UPDATE `pictures` SET `username` = ? WHERE `username` = ?";
+      $query = $this->pdo->prepare($sql);
+      $query->execute(array($newusername, $oldusername));
+      $query->closeCursor();
+    }
+    catch (PDOException $e) {
+        die($e->getMessage());
+    }
+  }
 }

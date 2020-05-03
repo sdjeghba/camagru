@@ -56,7 +56,7 @@ class HandleDb extends DbInfos {
         $pdo->prepare($sql)->execute($values);
     }
 
-    protected function if_value_exist(string $field, string $to_find, string $table) {
+    public function if_value_exist(string $field, string $to_find, string $table) {
         $sql = "SELECT $field FROM $table";
         $query = $this->pdo->query($sql);
         $array = $query->fetchAll(PDO::FETCH_OBJ);
@@ -67,6 +67,33 @@ class HandleDb extends DbInfos {
         }
         endforeach;
         return FALSE;
+    }
+
+    public function changeUsername(string $oldusername, string $newusername) {
+        try {
+            var_dump($oldusername);
+            var_dump($newusername);
+            $pdo = self::db_connect();
+            $sql_pictures = "UPDATE `pictures` SET `username` = ? WHERE `username` = ?";
+            $query = $pdo->prepare($sql_pictures);
+            $query->execute(array($newusername, $oldusername));
+            $query->closeCursor();
+            $sql_likes = "UPDATE `likes` SET `username` = ? WHERE `username` = ?";
+            $query = $pdo->prepare($sql_likes);
+            $query->execute(array($newusername, $oldusername));
+            $query->closeCursor();
+            $sql_comments = "UPDATE `comments` SET `username` = ? WHERE `username` = ?";
+            $query = $pdo->prepare($sql_comments);
+            $query->execute(array($newusername, $oldusername));
+            $query->closeCursor();
+            $sql_users = "UPDATE `users` SET `username` = ? WHERE `username` = ?";
+            $query = $pdo->prepare($sql_users);
+            $query->execute(array($newusername, $oldusername));
+            $query->closeCursor();
+        }
+        catch (PDOException $e) {
+            die($e->getMessage());
+        }
     }
 
     private function create_tables(){

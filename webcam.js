@@ -89,23 +89,22 @@ function takeSnapshot(flow) {
     }
 }
 
-
 //diplay the miniatures filtered lively;
 function displayMiniatures(id, data) {
-  // let div = document.createElement("DIV");
-  // div.setAttribute("class", "displaypic");
-  let pic = document.createElement("IMG");
-  pic.setAttribute("src", data);
-  pic.setAttribute("class", "miniature");
-  // let x = document.createElement("IMG");
-  // x.setAttribute("src", "../public/img/delete.png");
-  // x.setAttribute("class", "deletepic");
-  // x.setAttribute("id", "delete_"+id);
-  // x.setAttribute("onclick", "deletePicture("+id+")");
+  let div = document.createElement("DIV");
+  div.setAttribute("class", "display_min");
+  let picture = document.createElement("IMG");
+  picture.setAttribute("src", data);
+  picture.setAttribute("class", "miniature");
+  let close = document.createElement("IMG");
+  close.setAttribute("src", "redcross.png");
+  close.setAttribute("class", "delete_picture");
+  close.setAttribute("id", "delete_"+id);
+  close.setAttribute("onclick", "deletePicture("+id+")");
   let miniature = document.getElementById('side');
-  miniature.insertBefore(pic, miniature.childNodes[0]);
-  // div.insertBefore(x, div.childNodes[0]);
-  // div.insertBefore(pic, div.childNodes[0]);
+  miniature.insertBefore(div, miniature.childNodes[0]);
+  div.insertBefore(picture, div.childNodes[0]);
+  div.insertBefore(close, div.childNodes[0]);
 }
 
 //function: save picture to the database and call the displayMiniatures function
@@ -166,7 +165,6 @@ function radio_selected(value) {
   }
   photoButton.removeAttribute("disabled");
   submitupload.removeAttribute("disabled");
-  console.log(filter_selected);
   }
 
   //handle the upload button
@@ -181,3 +179,10 @@ function radio_selected(value) {
     reader.readAsDataURL(file);
   }
 }, false);
+
+function deletePicture(id) {
+  let elem = document.getElementById('delete_'+id).parentNode.remove();
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "/delete_picture.php?id_pic="+id, true);
+  xhr.send();
+}

@@ -43,7 +43,7 @@ $index = ($current_page - 1) * $pictures_by_page;
                     $number_comments = $comment->getCommentsNumber();
                     ?>
                     <div id="card-size" class="card-sm mx-2 my-3 border border-black">
-                        <button onclick="deletePicture(<?= $id_pic ?>)" class="delete_button" id="delete_<?= $id_pic ?>">❌</button>
+                        <img onclick="deletePicture(<?= $id_pic ?>)" id="delete_<?= $id_pic ?>" src="redcross.png" alt="" class="delete_picture">
                         <img class="img-card" src="data:image/jpeg;base64,<?= base64_encode($value['picture']) ?>"/>
                         <div class="card-body">
                         <?php  if (!empty($_SESSION) && $_SESSION['username']): {
@@ -55,11 +55,10 @@ $index = ($current_page - 1) * $pictures_by_page;
                                 }
                                 endif;
                             }
-                            endif;
-                            ?>
+                            endif;?>
+                            <span class="like-police" id="likes_number<?= $id_pic ?>"><?= $number_like ?> j'aime </span>
                             <img class="comment" src="/content/images/comment.png"/>
                             <span id="comments_number_<?= $id_pic ?>" class="comment-police"><?= $number_comments ?> commentaire<?= $number_comments > 1 ? "s" : ""; ?></span>
-                            <span class="like-police" id="likes_number<?= $id_pic ?>"><?= $number_like ?> j'aime </span>
                             <div class="card-text">
                             </div>
                             <?php if (!empty($_SESSION) && !empty($_SESSION['username'])) {?>

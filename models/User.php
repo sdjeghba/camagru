@@ -5,7 +5,7 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/HandleDb.php";
 
 class User extends HandleDB{
 
-    protected $user_login;
+    public $user_login;
     protected $user_mail;
     protected $user_password;
     protected $user_id;
@@ -20,7 +20,7 @@ class User extends HandleDB{
         $this->only_reset = 0;
     }
 
-    protected function get_user_information(string $user_login, string $value) {
+    public function get_user_information(string $user_login, string $value) {
         $query = $this->pdo->prepare('SELECT * FROM users WHERE username = ?');
         $query->execute(array($user_login));
         $row = $query->fetch(PDO::FETCH_OBJ);
@@ -136,10 +136,16 @@ class User extends HandleDB{
         return FALSE;
     }
 
-    public function update_user_information(string $field, string $new_password) {
-        $sql = "UPDATE users SET $field = ? WHERE username = ?";
-        $query = $this->pdo->prepare($sql);
-        $query->execute(array($new_password, $this->user_login));
-        $query->closeCursor();
+    public function update_user_information(string $field, string $new_value) {
+        try {
+            $sql = "UPDATE users SET $field = ? WHERE username = ?";
+            $query = $this->pdo->prepare($sql);
+            $query->execute(array($new_value, $this->user_login));
+            $query->closeCursor();
+        }
+        catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        
     }
 }
