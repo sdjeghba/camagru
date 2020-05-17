@@ -181,7 +181,7 @@ function radio_selected(value) {
 }, false);
 
 function deletePicture(id) {
-  let elem = document.getElementById('delete_'+id).parentNode.remove();
+  document.getElementById('delete_'+id).parentNode.remove();
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/delete_picture.php?id_pic="+id, true);
   xhr.send();

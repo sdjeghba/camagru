@@ -42,7 +42,7 @@ HTML;
                     <a class="nav-link" href="/my_gallery.php">Album</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="/account.php">Profil</a>
+                    <a class="nav-link" href="/controllers/profil_controller.php">Profil</a>
                 </li>
                 <li class="nav-item mx-2">
                     <a href="/controllers/logout.php" class="btn btn-danger">Déconnexion</a></p>

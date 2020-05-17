@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/models/pictures.php';
-require_once __DIR__ . '/models/likes.php';
-require_once __DIR__ . '/models/comments.php';
+require_once __DIR__ . '/models/pictures.class.php';
+require_once __DIR__ . '/models/likes.class.php';
+require_once __DIR__ . '/models/comments.class.php';
 
 $id_pic = $_GET['id_pic'];
 $db = new Pictures($id_pic, "", $_SESSION['username']);

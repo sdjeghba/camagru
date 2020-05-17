@@ -1,12 +1,12 @@
 <?php 
 require __DIR__ . "/content/layout/navbar.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/ViewsMsg.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/pictures.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/likes.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/comments.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/viewsMsg.class.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/pictures.class.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/likes.class.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/comments.class.php";
 
 if (empty($_SESSION) || empty($_SESSION['online']) || $_SESSION['online'] != 1):
-    ViewsMsg::alert_message("Vous n'avez pas accès à cette page" ,"danger");
+    viewsMsg::alert_message("Vous n'avez pas accès à cette page" ,"danger");
 else: {
     $username = $_SESSION['username'];
     $pictures = new Pictures("", $username, "");

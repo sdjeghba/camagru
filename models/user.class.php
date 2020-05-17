@@ -1,16 +1,16 @@
 <?php
 
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/HandleDb.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/databaseManager.class.php";
 
 
-class User extends HandleDB{
+class User extends databaseManager{
 
-    public $user_login;
+    public    $user_login;
     protected $user_mail;
     protected $user_password;
     protected $user_id;
     protected $pdo;
-    private $only_reset;
+    private   $only_reset;
 
     public function __construct(string $user, string $mail, string $pwd) {
         $this->user_login = $user;
@@ -51,7 +51,6 @@ class User extends HandleDB{
         mail($recipient, $subject, $message, $mail_header);
         $str = 'localhost:8888/controllers/validation_mail_controller.php/?log='.urlencode($this->user_login).'&mail_key='.urlencode($mail_key);
         echo $str;
-
     }
 
     public function send_reset_password_mail() {
@@ -146,6 +145,38 @@ class User extends HandleDB{
         catch (PDOException $e) {
             die($e->getMessage());
         }
-        
+    }
+
+    public function securePwd($password) :bool {
+        var_dump($password);
+        if (strtolower($password) === $this->user_login)
+            return FALSE;
+        if (!(preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,20}$#', $password)))
+            return FALSE;
+        $file = fopen(dirname(__DIR__) . '/dictionnary.txt', 'r');
+        $buffer = "";
+        if ($file) {
+            while (!feof($file) && ($buffer != $password)) {
+                $buffer = fgets($file);
+            }
+            if ($buffer == $password) {
+                fclose($file);
+                return FALSE;
+            }
+        }
+        return TRUE;
+    }
+
+    public static function checkMail(string $email) : bool {
+        $reg = "/^[a-z\'0-9]+([._-][a-z\'0-9]+)*@([a-z0-9]+([._-][a-z0-9]+))+$/";
+
+        if (preg_match($reg, $email)) {
+            $array = explode('@', $email);
+            if (checkdnsrr(end($array), 'MX'))
+                return TRUE;
+            else
+                return FALSE;
+        }
+        return FALSE; 
     }
 }

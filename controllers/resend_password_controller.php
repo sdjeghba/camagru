@@ -1,9 +1,8 @@
 <?php
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "/content/layout/navbar.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/User.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/HandleDb.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/ViewsMsg.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "/models/Form.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/user.class.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/databaseManager.class.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/viewsMsg.class.php";
 
 $username_error = 0;
 $password_error = 0;
@@ -13,7 +12,7 @@ $sucess = 0;
 if (empty($_SESSION['online'])): {
     if (!empty($_POST)) {
         if (empty($_POST['usrname'])): {
-            ViewsMsg::alert_message("Veuillez remplir tout les champs", "danger");
+            viewsMsg::alert_message("Veuillez remplir tout les champs", "danger");
             exit();
         }
         else: {
@@ -22,10 +21,10 @@ if (empty($_SESSION['online'])): {
             if ($user->user_not_found()){
                 $success = 1;
                 $user->send_reset_password_mail();
-                ViewsMsg::alert_message("Vous allez reçevoir un mail de reinitialisation, vérifier votre boite de réception et votre courrier indésirable", "success");
+                viewsMsg::alert_message("Vous allez reçevoir un mail de reinitialisation, vérifier votre boite de réception et votre courrier indésirable", "success");
             }
             else {
-                ViewsMsg::alert_message("Votre nom d'utilisateur ou votre mail nous ai inconnu, veuillez vous inscrire", "danger");
+                viewsMsg::alert_message("Votre nom d'utilisateur ou votre mail nous ai inconnu, veuillez vous inscrire", "danger");
             }
         }
         endif;
@@ -35,7 +34,7 @@ if (empty($_SESSION['online'])): {
     }
 }
 else: {
-    ViewsMsg::alert_message("Page introuvable, vous allez être redirigé..", "danger");
-    ViewsMsg::index_redirection();
+    viewsMsg::alert_message("Page introuvable, vous allez être redirigé..", "danger");
+    viewsMsg::index_redirection();
 }
 endif;

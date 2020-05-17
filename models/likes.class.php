@@ -1,7 +1,7 @@
 <?php
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/HandleDb.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/databaseManager.class.php";
 
-class Likes extends HandleDb {
+class Likes extends databaseManager {
 
     private $id_img;
     private $img_username;
@@ -62,18 +62,6 @@ class Likes extends HandleDb {
             $query->execute(array($this->id_img));
             $likes_number = $query->fetchAll();
             return count($likes_number);
-        }
-        catch (PDOException $e) {
-            die($e->getMessage());
-        }
-    }
-
-    public function changeUsername(string $oldusername, $newusername) {
-        try {
-            $sql = "UPDATE likes SET `username` = ? WHERE username = ?";
-            $query = $this->pdo->prepare($sql);
-            $query->execute(array($newusername, $oldusername));
-            $query->closeCursor();
         }
         catch (PDOException $e) {
             die($e->getMessage());

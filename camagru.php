@@ -1,13 +1,13 @@
 <?php
 require_once __DIR__ . "/content/layout/navbar.php";
-require_once 'models/pictures.php';
+require_once 'models/pictures.class.php';
 
 
 if (empty($_SESSION))
-    ViewsMsg::alert_message("Vous n'êtes pas autorisé à acceder à cette page", "danger");
+    viewsMsg::alert_message("Vous n'êtes pas autorisé à acceder à cette page", "danger");
 else {
     if (empty($_SESSION['online']))
-        ViewsMsg::alert_message("Vous n'êtes pas autorisé à acceder à cette page", "danger");
+        viewsMsg::alert_message("Vous n'êtes pas autorisé à acceder à cette page", "danger");
     else {?>
 
 <body>

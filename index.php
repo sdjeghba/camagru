@@ -1,13 +1,12 @@
 <?php
 
 require __DIR__ . DIRECTORY_SEPARATOR . "content/layout/navbar.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/User.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/HandleDb.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/ViewsMsg.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/Form.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/pictures.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/likes.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/comments.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/user.class.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/databaseManager.class.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR ."./models/viewsMsg.class.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/pictures.class.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/likes.class.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "/models/comments.class.php";
 
 
 if (!empty($_SESION['online'])) {

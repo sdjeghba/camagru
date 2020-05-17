@@ -14,23 +14,24 @@
                             <label for="username">Non utilisateur : </label>
                             <input type="text" class="form-control" id="username" name="usrname" placeholder="Choisir un nom d'utilisateur" value="" required>
                         </div>
-                        <?php $pseudo_error == 0 ? ViewsMsg::alert_message("Caractères autorisés : chiffres, lettres et - ", "danger") : 0; ?>
-                        <?php $pseudo_taken == 1 ? ViewsMsg::alert_message("Pseudo déjà utilisé choisissez une autre", "danger") : 0; ?>
+                        <?php $pseudo_error == 0 ? viewsMsg::alert_message("Caractères autorisés : chiffres, lettres minuscules et - ", "danger") : 0; ?>
+                        <?php $pseudo_taken == 1 ? viewsMsg::alert_message("Pseudo déjà utilisé choisissez une autre", "danger") : 0; ?>
                         <div class="form-group">
                             <label for="mail1">Adresse mail : </label>
                             <input type="email" class="form-control" id="mail1" name="mail" placeholder="Entrez votre email" value="" required>
                         </div>
-                        <?php $mail_error == 2 ? ViewsMsg::alert_message("Adresse mail déjà utiliseée choisissez une autre ou bien cliquer sur mot de passe oublié dans la barre de navigation", "danger") : 0; ?>
-                        <?php $mail_error == 1 ? ViewsMsg::alert_message("Veuillez entrer une adresse mail valide", "danger") : 0; ?>
+                        <?php $mail_error == 2 ? viewsMsg::alert_message("Adresse mail déjà utiliseée choisissez une autre ou bien cliquer sur mot de passe oublié dans la barre de navigation", "danger") : 0; ?>
+                        <?php $mail_error == 1 ? viewsMsg::alert_message("Veuillez entrer une adresse mail valide", "danger") : 0; ?>
                         <div class="form-group">
                             <label for="password">Mot de passe : </label>
                             <input type="password" class="form-control" id="password" name="pwd" placeholder="Entrez votre mot de passe" value="" required>
                         </div>
+                        <?php $password_error == 2 ? viewsMsg::alert_message("Votre mot de passe doit être différent de votre nom d'utilisateur, contenir entre 6 et 20 charactères, une majuscule, une minuscule et un chiffre", "danger") : 0; ?>
                         <div class="form-group">
                             <label for="password2">Confirmer votre mot de passe : </label>
                             <input type="password" class="form-control" id="password2" name="pwd2" placeholder="Confirmez votre mot de passe" value="" required>
                         </div>
-                        <?php $mdp_error == 1 ? ViewsMsg::alert_message("Vos deux mots de passes sont differents", "danger") : 0; ?>
+                        <?php $password_error == 1 ? viewsMsg::alert_message("Vos deux mots de passes sont differents", "danger") : 0; ?>
                         <div class="text-center">       
                             <button class="btn btn-primary my-4">S'inscrire</button>
                         </div>

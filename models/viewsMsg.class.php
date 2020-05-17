@@ -1,6 +1,6 @@
 <?php
 
-class ViewsMsg {
+class viewsMsg {
     
     public static function loggedOrNot($online, $session) {
         if (empty($session)) {
@@ -30,7 +30,7 @@ HTML;
     }
 
     public static function index_redirection() {
-        header('Refresh: 4; url="/index.php"');
+        header('Refresh: 3; url="/index.php"');
         echo <<<HTML
         <a href="/index.php"><i><center>Si la redirection ne s'effectue pas cliquez ici..</center></i></a>
 HTML;

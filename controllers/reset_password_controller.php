@@ -1,10 +1,9 @@
 <?php
 
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "/content/layout/navbar.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/User.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/HandleDb.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/ViewsMsg.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "/models/Form.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/user.class.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/databaseManager.class.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/viewsMsg.class.php";
 
 $old_mdp_error = 0;
 $new_mdp_error = 0;
@@ -13,7 +12,7 @@ $username_not_found = 0;
 if (empty($_SESSION['online'])): {
     if (!empty($_POST)) {
         if (empty($_POST['pwd']) || empty($_POST['oldpwd']) || empty($_POST['newpwd'])): {
-            ViewsMsg::alert_message("Veuillez remplir tout les champs", "danger");
+            viewsMsg::alert_message("Veuillez remplir tout les champs", "danger");
             exit();
         }
         else: {
@@ -28,10 +27,10 @@ if (empty($_SESSION['online'])): {
 
             if ($old_mdp_error && $new_mdp_error && $username_not_found) {
                 $user->update_user_information("userpassword", $new_password);
-                ViewsMsg::alert_message("Félicitation votre mot de passe a bien été changé", "success");
+                viewsMsg::alert_message("Félicitation votre mot de passe a bien été changé", "success");
             }
             else {
-                ViewsMsg::alert_message("ERROR", "danger");
+                viewsMsg::alert_message("ERROR", "danger");
                 echo "------------------";
                 var_dump($old_mdp_error);
                 var_dump($new_mdp_error);
@@ -46,8 +45,8 @@ if (empty($_SESSION['online'])): {
     }
 }
 else: {
-    ViewsMsg::alert_message("Page introuvable, vous allez être redirigé..", "danger");
-    ViewsMsg::index_redirection();
+    viewsMsg::alert_message("Page introuvable, vous allez être redirigé..", "danger");
+    viewsMsg::index_redirection();
 }
 endif;
 

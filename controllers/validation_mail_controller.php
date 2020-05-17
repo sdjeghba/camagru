@@ -1,12 +1,12 @@
 <?php
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "content/layout/navbar.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/User.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/HandleDb.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/ViewsMsg.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/user.class.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/databaseManager.class.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."models/viewsMsg.class.php";
 $_SESSION['online'] = 0;
 
 /*
-By validation_mail method in User.php check if the user already exist and if the key is true,
+By validation_mail method in user.class.php check if the user already exist and if the key is true,
 if it's ok set active to 1 in database and the inscription is valid.
 Or resend mail validation.
 Or errors_messages.
@@ -24,9 +24,9 @@ if (!empty($_GET)) {
 
         if ($return) {
             if ($return == 1) 
-                ViewsMsg::alert_message("L'utilisateur n'existe pas dans notre base de donneée veuillez vous inscrire", "danger");
+                viewsMsg::alert_message("L'utilisateur n'existe pas dans notre base de donneée veuillez vous inscrire", "danger");
             else {
-                ViewsMsg::alert_message("Problème lors de la confirmation par mail veuillez redemander un mail de confirmation", "danger");
+                viewsMsg::alert_message("Problème lors de la confirmation par mail veuillez redemander un mail de confirmation", "danger");
                 if ($_SESSION['online'] == 1): {
                 echo <<<HTML
                 <div class="container justify-content-center">
@@ -42,22 +42,22 @@ if (!empty($_GET)) {
 HTML;
                 }
                 else: {
-                    ViewsMsg::alert_message("Veuillez vous connectez afin de reçevoir un nouveau mail de confirmation", "danger");
+                    viewsMsg::alert_message("Veuillez vous connectez afin de reçevoir un nouveau mail de confirmation", "danger");
                 }
                 endif;
             }
         }
         else
-            ViewsMsg::alert_message("Bravo, vous êtes désormais inscrit, vous pouvez vous connecter dès maintenant!", "success");
+            viewsMsg::alert_message("Bravo, vous êtes désormais inscrit, vous pouvez vous connecter dès maintenant!", "success");
     }
     else {
-        ViewsMsg::alert_message("404 ERROR.. vous allez être redirigé", "danger");
+        viewsMsg::alert_message("404 ERROR.. vous allez être redirigé", "danger");
         header("Refresh: 3; url='/index.php'");
         exit();
     }
 }
 else {
-    ViewsMsg::alert_message("404 ERROR.. vous allez être redirigé", "danger");
+    viewsMsg::alert_message("404 ERROR.. vous allez être redirigé", "danger");
     header("Refresh: 3; url='/index.php'");
     exit();
 }

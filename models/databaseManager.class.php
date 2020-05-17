@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "config/DbInfos.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/ViewsMsg.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/viewsMsg.class.php";
 
 /*
 
@@ -10,7 +10,7 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/ViewsMsg.php";
 
 */
 
-class HandleDb extends DbInfos {
+class databaseManager extends DbInfos {
 
     private function sql_connect($database_name = ''): PDO {
         try {
@@ -141,7 +141,7 @@ class HandleDb extends DbInfos {
             $pdo->prepare($query)->execute();
             self::create_tables();
             if (empty($_GET['customradio'])) {
-                ViewsMsg::alert_message("La base de donnée a bien été creée", "success");
+                viewsMsg::alert_message("La base de donnée a bien été creée", "success");
             }
         }
         else
@@ -151,7 +151,7 @@ class HandleDb extends DbInfos {
                     $instructions = "DROP DATABASE camagru";
                     $query = $pdo->prepare($instructions)->execute();
                     self::create_database();
-                    ViewsMsg::alert_message("La base de donnée a bien été réinitialisé avec succès", "success");
+                    viewsMsg::alert_message("La base de donnée a bien été réinitialisé avec succès", "success");
                     header('Refresh:3; url=/index.php');
                 }
                 else: {

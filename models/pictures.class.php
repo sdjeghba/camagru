@@ -1,8 +1,8 @@
 <?php
 
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/HandleDb.php";
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/databaseManager.class.php";
 
-class Pictures extends HandleDb {
+class Pictures extends databaseManager {
 
   protected $img_owner;
   protected $pdo;
@@ -111,18 +111,6 @@ class Pictures extends HandleDb {
     }
     catch (PDOException $e){
       die($e->getMessage());
-    }
-  }
-
-  public function changeUsername(string $oldusername, $newusername) {
-    try {
-      $sql = "UPDATE `pictures` SET `username` = ? WHERE `username` = ?";
-      $query = $this->pdo->prepare($sql);
-      $query->execute(array($newusername, $oldusername));
-      $query->closeCursor();
-    }
-    catch (PDOException $e) {
-        die($e->getMessage());
     }
   }
 }

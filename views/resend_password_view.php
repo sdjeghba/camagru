@@ -11,7 +11,7 @@
                             <label for="username">Non utilisateur ou adresse mail : </label>
                             <input type="text" class="form-control" id="username" name="usrname" placeholder="Choisir un nom d'utilisateur" value="" required>
                         </div>
-                        <?php $pseudo_error == 0 ? ViewsMsg::alert_message("Adresse mail ou pseudo inconnu", "danger") : 0; ?>
+                        <?php $pseudo_error == 0 ? viewsMsg::alert_message("Adresse mail ou pseudo inconnu", "danger") : 0; ?>
                         <div class="text-center">       
                             <button class="btn btn-primary my-4">Reinitialiser</button>
                         </div>
