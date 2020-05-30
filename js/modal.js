@@ -1,9 +1,8 @@
 let modal = null;
 
-const openModal = function (e) {
-    console.log('openmodal');
+function openModal(e) {
     e.preventDefault();
-    const target = document.querySelector(e.target.getAttribute('href'));
+    let target = document.querySelector(e.target.getAttribute('href'));
     target.style.display = null;
     target.removeAttribute('aria-hidden');
     target.setAttribute('aria-modal', 'true');
@@ -11,11 +10,9 @@ const openModal = function (e) {
     modal.addEventListener('click', closeModal);
     modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
     modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
-
 }
 
-const closeModal = function (e) {
-    console.log('closemodal');
+function closeModal(e) {
     if (modal === null) return
     e.preventDefault();
     modal.style.display = "none";
@@ -27,7 +24,7 @@ const closeModal = function (e) {
     modal = null;
 }
 
-const stopPropagation = function (e) {
+function stopPropagation(e) {
     e.stopPropagation();
 }
 

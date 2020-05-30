@@ -4,6 +4,7 @@
 
 .webcam {
 	margin:auto;
+	top:2px;
 	position:relative;
 	min-width: 320px;
 	min-height: 240px;
@@ -11,7 +12,7 @@
 
 img.pngfont {
 	position:absolute;
-	margin:auto;
+	/* margin:auto; */
 	width: 320px;
 	height: 240px;
 	top:0;
@@ -21,25 +22,57 @@ img.pngfont {
 }
 
 canvas {
-	width:100%;
-	height:100%;
-	max-width: 320px;
-	max-height: 240px;
-	margin: 10px auto;
+	/* width:100%;
+	height:100%; */
+	width: 320px;
+	height: 240px;
+	margin:auto;
+	/* margin: 10px auto; */
 	background-color: #fff;
 	border: 1px solid #babbbd;
 	padding: 10px;
 	box-shadow: 1px 1px 1px #babbbd;
-	margin: 10px auto 0;
+	/* margin: 10px auto 0; */
 	border: 1px solid #babbbd;
 }
 
 img.miniature {
-	width: 100%;
-	width: 120px;
-	height: 100%;
-	height: 90px;
-	margin:3px;
+	width: 144px;
+	height: 108px;
+	margin:auto;
+	margin-bottom: 4px;
+}
+
+.submitdisabled {
+	opacity:50%;
+}
+
+.submitbutton {
+	width:200px;
+	height:40px;
+	margin:auto;
+	margin-bottom: 6px;
+	background-color: #2a9d8f;
+	color: white;
+	font-style: italic;
+	border-radius: 8px;
+}
+
+.filelabel {
+	font-weight: bolder;
+	font-style: italic;
+	font-size: 1.1em;
+	color: #2a9d8f;
+}
+
+.filelabelinput {
+	font-style: italic;
+	background-color: #e5e5e5;
+	border-radius: 5px;
+	font-size: 0.9em;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-top: 3px;
 }
 
 /* 
@@ -164,4 +197,41 @@ a.comment-link {
 .arrow {
 	margin-left:20px;
 	margin-right:20px;
+}
+
+.footer {
+	bottom:0px;
+	text-align: right;
+	padding:5px;
+	padding-right:5%;
+}
+
+@media screen and (max-width: 330px) {
+	canvas {
+		width: 256px;
+		height: 192px;
+	}
+
+	.webcam {
+		width: 256px;
+		height: 192px;
+		margin-left: -20px;
+	}
+
+	img.pngfont {
+		position:absolute;
+		width: 256px;
+		height: 192px;
+		margin-left: 32px;
+	}
+
+	.filelabelinput {
+		font-style: italic;
+		background-color: #e5e5e5;
+		border-radius: 5px;
+		font-size: 0.9em;
+		padding-left: 6px;
+		padding-right: 6px;
+		padding-top: 3px;
+	}
 }

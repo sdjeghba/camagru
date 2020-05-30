@@ -12,7 +12,7 @@ function addLike(id) {
         let modal_number = numb;
         modal_elem.innerHTML = modal_number+' j\'aime';
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "/add_like.php?id_picture="+id, true);
+        xhr.open("GET", "/library/add_like.php?id_picture="+id, true);
         xhr.send();
     }
     else if (src == "/content/images/liked.png") {
@@ -27,7 +27,7 @@ function addLike(id) {
         let modal_number = numb;
         modal_elem.innerHTML = modal_number+' j\'aime';
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "../delete_like.php?id_picture="+id, true);
+        xhr.open("GET", "/library/delete_like.php?id_picture="+id, true);
         xhr.send();
     }
 }
@@ -47,7 +47,7 @@ function addComment(id, comment, username) {
     nbc++;
     element2.innerHTML = nbc+' commentaires';
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/add_comment.php", true);
+    xhr.open("POST", "/library/add_comment.php", true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send("id_picture="+id+"&comment="+comment);
     xhr.onreadystatechange = function () {
@@ -65,7 +65,7 @@ function addComment(id, comment, username) {
 function deletePicture(id) {
     var elem = document.getElementById('delete_'+id).parentNode.remove();
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/delete_picture.php?id_pic="+id, true);
+    xhr.open("GET", "/library/delete_picture.php?id_pic="+id, true);
     xhr.send();
 }
 

@@ -36,16 +36,16 @@ HTML;
         <div class="navbar">
             <ul class="navbar-nav navbar-expand-lg ">
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="/camagru.php">Photomaton</a>
+                    <a class="nav-link" href="/controllers/camagru_controller.php">Photomaton</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="/my_gallery.php">Album</a>
+                    <a class="nav-link" href="/controllers/my_gallery_controller.php">Album</a>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="nav-link" href="/controllers/profil_controller.php">Profil</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a href="/controllers/logout.php" class="btn btn-danger">Déconnexion</a></p>
+                    <a href="/library/logout.php" class="btn btn-danger">Déconnexion</a></p>
                 </li>
              </ul>
     </div>         

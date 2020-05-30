@@ -16,11 +16,11 @@ class User extends databaseManager{
         $this->user_login = $user;
         $this->user_mail = $mail;
         $this->user_password = $pwd;
-        $this->pdo = $this->db_connect();
+        $this->pdo = $this->databaseConnect();
         $this->only_reset = 0;
     }
 
-    public function get_user_information(string $user_login, string $value) {
+    public function getUserInformation(string $user_login, string $value) {
         $query = $this->pdo->prepare('SELECT * FROM users WHERE username = ?');
         $query->execute(array($user_login));
         $row = $query->fetch(PDO::FETCH_OBJ);
@@ -28,13 +28,13 @@ class User extends databaseManager{
         return $row->$value;
     }
 
-    private function get_mail_key($login) :string {
-        return self::get_user_information($login, "mail_key");
+    private function getMailKey($login) :string {
+        return self::getUserInformation($login, "mail_key");
     }
 
-    public function send_validation_mail(?string $mail_key ) {
+    public function sendValidationMail(?string $mail_key ) {
         if ($mail_key == NULL) {
-            $mail_key = self::get_mail_key($this->user_login);
+            $mail_key = self::getMailKey($this->user_login);
         }
         $recipient = $this->user_mail;
         $active = 0;
@@ -53,10 +53,10 @@ class User extends databaseManager{
         echo $str;
     }
 
-    public function send_reset_password_mail() {
+    public function sendResetPasswordMail() {
         $recipient = "";
         if ($this->only_reset == 1) {
-            $recipient = self::get_user_information($this->user_login, "usrmail");
+            $recipient = self::getUserInformation($this->user_login, "usrmail");
             $tmp_password = md5(microtime(TRUE)*10000);
             $sended_password = password_hash($tmp_password, PASSWORD_DEFAULT);
             $subject= "Reinitialiser votre mot de passe";
@@ -76,20 +76,20 @@ class User extends databaseManager{
         }
     }
 
-    public function validation_reset_password () {
+    public function validationResetPassword () {
         return;
     }
 
-    public function validation_mail(string $login, string $mail_key): int {
-        if (self::user_exist() == FALSE)
+    public function validationMail(string $login, string $mail_key): int {
+        if (self::userExist() == FALSE)
             return 1;
-        if (self::get_mail_key($login) != $mail_key)
+        if (self::getMailKey($login) != $mail_key)
             return 2;
-        self::update_user_information("active", "1");
+        self::updateUserInformation("active", "1");
         return 0;
     }
 
-    public function db_password_verify() : bool {
+    public function dbPasswordVerify() : bool {
         $query = $this->pdo->prepare('SELECT * FROM users WHERE username = ?');
         $query->execute(array($this->user_login));
         $tab = $query->fetchall(PDO::FETCH_OBJ);
@@ -105,37 +105,37 @@ class User extends databaseManager{
         return FALSE;
     }
 
-    public function user_exist() : bool {
-        return ($this->if_value_exist("username", $this->user_login, "users"));
+    public function userExist() : bool {
+        return ($this->valueExist("username", $this->user_login, "users"));
     }
 
-    public function mail_exist() : bool {
-        return ($this->if_value_exist("usrmail", $this->user_mail, "users"));
+    public function mailExist() : bool {
+        return ($this->valueExist("usrmail", $this->user_mail, "users"));
     }
 
-    public function active_account() : bool {
-        return (self::get_user_information($this->user_login, "active") == 1 ? TRUE : FALSE);
+    public function activeAccount() : bool {
+        return (self::getUserInformation($this->user_login, "active") == 1 ? TRUE : FALSE);
     }
 
-    public function sign_in(array $values) {
-        $fields = ['username', 'usrmail', 'userpassword', 'mail_key', 'active'];
+    public function signIn(array $values) {
+        $fields = ['username', 'usrmail', 'userpassword', 'mail_key', 'active', 'notif'];
         $table = 'users';
-        $this->insert_into($fields, $values, $table);
+        $this->insertInto($fields, $values, $table);
     }
 
-    public function user_not_found() :bool {
-        if (self::user_exist()) {
+    public function userNotFound() :bool {
+        if (self::userExist()) {
             $this->only_reset = 1;
             return TRUE;
         }
-        if (self::mail_exist($this->user_login)) {
+        if (self::mailExist($this->user_login)) {
             $this->only_reset = 2;
             return TRUE;
         }
         return FALSE;
     }
 
-    public function update_user_information(string $field, string $new_value) {
+    public function updateUserInformation(string $field, string $new_value) {
         try {
             $sql = "UPDATE users SET $field = ? WHERE username = ?";
             $query = $this->pdo->prepare($sql);
@@ -148,20 +148,20 @@ class User extends databaseManager{
     }
 
     public function securePwd($password) :bool {
-        var_dump($password);
         if (strtolower($password) === $this->user_login)
             return FALSE;
-        if (!(preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,20}$#', $password)))
+        if (!(preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{5,20}$#', $password)))
             return FALSE;
-        $file = fopen(dirname(__DIR__) . '/dictionnary.txt', 'r');
+        $file = fopen(dirname(__DIR__) . '/content/dictionnary.txt', 'r');
+        $minpassword = strtolower($password);
         $buffer = "";
         if ($file) {
-            while (!feof($file) && ($buffer != $password)) {
-                $buffer = fgets($file);
-            }
-            if ($buffer == $password) {
-                fclose($file);
-                return FALSE;
+            while (!feof($file) && ($buffer != $minpassword)) {
+                $buffer = trim(fgets($file));
+                if ($buffer == $minpassword) {
+                    fclose($file);
+                    return FALSE;
+                }
             }
         }
         return TRUE;

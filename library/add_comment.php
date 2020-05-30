@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . "/models/comments.class.php";
+require_once dirname(__DIR__ ). "/models/comments.class.php";
 
 $comment = $_POST['comment'];
 $id_picture = $_POST['id_picture'];

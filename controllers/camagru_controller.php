@@ -1,15 +1,21 @@
 <?php
 
 require_once dirname(__DIR__) . "/content/layout/navbar.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/user.class.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/databaseManager.class.php";
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR ."./models/viewsMsg.class.php";
+require_once dirname(__DIR__) . "/library/autoloader.php";
 
-
-if (empty($_SESSION['online'])) {
-    viewsMsg::alert_message("Page introuvable, vous allez être redirigé..", "danger");
-    viewsMsg::index_redirection();
+if (empty($_SESSION)): {
+    viewsMsg::alertMessage("Vous n'êtes pas autorisé à acceder à cette page", "danger");
+    viewsMsg::indexRedirection(3);
 }
-else {
-    echo "GOOD!";
+else: {
+    if (empty($_SESSION['online'])): {
+        viewsMsg::alertMessage("Vous n'êtes pas autorisé à acceder à cette page", "danger");
+        viewsMsg::indexRedirection(3);
+    }
+    else: {
+        require_once dirname(__DIR__) . "/views/camagru_view.php";
+    }
+    endif;
 }
+endif;
+require_once dirname(__DIR__) . "/content/layout/footer.php";

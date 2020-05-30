@@ -4,7 +4,7 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "models/databaseManager.cl
 
 class Pictures extends databaseManager {
 
-  protected $img_owner;
+  protected $img_owner; 
   protected $pdo;
   protected $img;
   protected $id_picture;
@@ -13,17 +13,22 @@ class Pictures extends databaseManager {
     $this->img_owner = htmlspecialchars($user_name);
     $this->img = $picture;
     $this->id_picture = $id_picture;
-    $this->pdo = $this->db_connect();
+    $this->pdo = $this->databaseConnect();
   }
 
   public function addPicture() {
     date_default_timezone_set('Europe/Paris');
-    $creation_date = date("Y-m-d H:i:s");
+    $timestamp = microtime(true);
+    // $micro = sprintf("%06d",($timestamp - floor($timestamp)) * 1000000);
+    $date = new DateTime( date('Y-m-d H:i:s.', $timestamp) );
+
+    // print $d->format("Y-m-d H:i:s.u");
+    // $creation_date = date("Y-m-d H:i:s");
     $fields = ["username", "creation_date", "picture"];
-    $values = [$this->img_owner,$creation_date, $this->img];
-    $this->insert_into($fields, $values, "pictures");
+    $values = [$this->img_owner,$timestamp, $this->img];
+    $this->insertInto($fields, $values, "pictures");
     try {
-      $query = $this->pdo->query("SELECT `id_picture` FROM `pictures` WHERE `username` = '" . $this->img_owner . "' AND `creation_date` = '" . $creation_date . "' ");
+      $query = $this->pdo->query("SELECT `id_picture` FROM `pictures` WHERE `username` = '" . $this->img_owner . "' AND `creation_date` = '" . $timestamp . "' ");
       $ret = $query->fetch(PDO::FETCH_ASSOC);
       $query->closeCursor();
       return $ret;

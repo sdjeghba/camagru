@@ -12,12 +12,12 @@ class Comments extends databaseManager {
         $this->picture_id = $id_img;
         $this->login = $user;
         $this->comment = $comment;
-        $this->pdo = $this->db_connect();
+        $this->pdo = $this->databaseConnect();
     }
 
     public function getComments() {
         try {
-            $query = $this->pdo->prepare("SELECT * FROM `comments` WHERE `id_picture` = ? ORDER BY `creation_date` DESC");
+            $query = $this->pdo->prepare("SELECT * FROM `comments` WHERE `id_picture` = ? ORDER BY `creation_date`");
             $query->execute(array($this->picture_id));
             $ret = $query->fetchAll(PDO::FETCH_OBJ);
             $query->closeCursor();
@@ -47,7 +47,7 @@ class Comments extends databaseManager {
         $creation_date = date("Y-m-d H:i:s");
         $fields = ['id_picture', 'comment', 'username', 'creation_date'];
         $values = [$this->picture_id, $this->comment, $this->login, $creation_date];
-        $this->insert_into($fields, $values, "comments");
+        $this->insertInto($fields, $values, "comments");
         try {
             $sql = "SELECT `username` FROM `comments` WHERE `id_picture` = ?";
             $query = $this->pdo->prepare($sql);

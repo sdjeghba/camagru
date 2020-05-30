@@ -998,3 +998,5 @@ pap
 amanda
 jessie
 1q2w3e
+qwerty1
+42borntocode

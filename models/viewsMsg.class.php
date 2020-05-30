@@ -23,21 +23,46 @@ HTML;
         }
     }
 
-    public static function alert_message(string $msg, string $type) {
+    public static function alertMessage(string $msg, string $type) {
         echo <<<HTML
         <div class="alert alert-$type">$msg</div>
 HTML;
     }
 
-    public static function index_redirection() {
-        header('Refresh: 3; url="/index.php"');
+    public static function indexRedirection($time) {
+        header('Refresh:' . $time . '; url="/index.php"');
         echo <<<HTML
         <a href="/index.php"><i><center>Si la redirection ne s'effectue pas cliquez ici..</center></i></a>
 HTML;
     }
 
-    public static function display_picture(string $img_path) {
+    public static function displayPicture(string $img_path) {
         echo <<<HTML
+HTML;
+    }
+
+    public static function resetDatabase() {
+        echo <<<HTML
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-9">
+                    <div class="alert alert-danger">La base de donneée existe déjà, voulez vous la reinitialiser ? Toutes les donneées seront perdues..</div>
+                    <form action="#" class="form-group">
+                        <div class="row justify-content-center">
+                            <div class="custom-control custom-radio mx-2 my-2">
+                                <input type="radio" id="non" name="customradio" class="custom-control-input" value="no">
+                                <label class="custom-control-label" for="non">Non</label>
+                            </div>
+                            <div class="custom-control custom-radio mx-2 my-2">
+                                <input type="radio" id="oui" name="customradio" class="custom-control-input" value="yes">
+                                <label class="custom-control-label" for="oui">Oui</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Valider</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 HTML;
     }
 }

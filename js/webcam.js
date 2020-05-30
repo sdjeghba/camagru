@@ -17,6 +17,7 @@ let width = 320,
     filter_selected = 0,
     data_picture = 0;
     data_upload = 0;
+    disabledError = 0;
     
 // get the webcam onto the browser
 navigator.mediaDevices.getUserMedia({video:true,audio:false}
@@ -32,10 +33,19 @@ navigator.mediaDevices.getUserMedia({video:true,audio:false}
 //play when ready
 video.addEventListener('canplay', function(e) {
   if (!streaming) {
-    video.setAttribute('width', width);
-    video.setAttribute('height', height);
-    canvas.setAttribute('width', width);
-    canvas.setAttribute('height', height);
+    if (window.screen.width < 330) {
+      video.setAttribute('width', 256);
+      video.setAttribute('height', 192);
+      canvas.setAttribute('width', width);
+      canvas.setAttribute('height', height); 
+    }
+    else {
+      video.setAttribute('width', width);
+      video.setAttribute('height', height);
+      canvas.setAttribute('width', width);
+      canvas.setAttribute('height', height);
+    }
+
 
     streaming = true;
   }
@@ -45,7 +55,7 @@ video.addEventListener('canplay', function(e) {
 function mergePD(picture) {
   let dataPicture = picture.replace("data:image/png;base64,", "");
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", "merge_pictures.php", true);
+  xhr.open("POST", "/library/merge_pictures.php", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.send("picture="+encodeURIComponent(dataPicture)+"&filter="+filter_selected);
   xhr.onreadystatechange = function() {
@@ -85,7 +95,7 @@ function takeSnapshot(flow) {
       }
     }
     else {
-      console.log("pas de photos");
+      console.log("No picture");
     }
 }
 
@@ -97,7 +107,7 @@ function displayMiniatures(id, data) {
   picture.setAttribute("src", data);
   picture.setAttribute("class", "miniature");
   let close = document.createElement("IMG");
-  close.setAttribute("src", "redcross.png");
+  close.setAttribute("src", "/content/images/redcross.png");
   close.setAttribute("class", "delete_picture");
   close.setAttribute("id", "delete_"+id);
   close.setAttribute("onclick", "deletePicture("+id+")");
@@ -111,13 +121,13 @@ function displayMiniatures(id, data) {
 function savePicture(data) {
   let picData = data.replace("data:image/png;base64,", "");
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", "save_picture.php", true);
+  xhr.open("POST", "/library/save_picture.php", true);
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhr.send("pic="+encodeURIComponent(picData));
   xhr.onreadystatechange = function () {
     if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
       let response = JSON.parse(xhr.responseText);
-      let id_pic = response['id_pic'];
+      let id_pic = response['id_picture'];
       displayMiniatures(id_pic, data);
     }
   }
@@ -127,62 +137,87 @@ function savePicture(data) {
 photoButton.addEventListener('click', function(e) {
   if (streaming == true) {
       takeSnapshot(1);
+      saveButton.removeAttribute("disabled");
   }
   else {
-    console.log("Pas de video");
+    console.log("No video");
   }
   e.preventDefault();
 }, false);
 
 saveButton.addEventListener('click', function(e) {
-  if (data_picture) {
+  if (!data_picture)
+    console.log("Nothing to save");
+  else
     savePicture(data_picture);
-  }
   e.preventDefault();
 }, false);
 
 submitupload.addEventListener('click', function(ev) {
   if (data_upload == 0)
-    console.log("Please upload a picture");
-  else
+    console.log("You have to upload a picture");
+  else {
+    saveButton.removeAttribute("disabled");
     takeSnapshot(0);
+  }
 }, false);
-
 
 //function: handle radio buttons and activate snapshot-merger button when filter selected
 function radio_selected(value) {
   if (value === 1) {
     filter_selected = 1;
-    imgsrc.setAttribute("src", "content/filters/img"+value+".png");
+    imgsrc.setAttribute("src", "/content/filters/img"+value+".png");
   }
   else if (value === 2) {
     filter_selected = 2;
-    imgsrc.setAttribute("src", "content/filters/img"+value+".png");
+    imgsrc.setAttribute("src", "/content/filters/img"+value+".png");
   }
   else if (value === 3) {
     filter_selected = 3;
-    imgsrc.setAttribute("src", "content/filters/img"+value+".png");
+    imgsrc.setAttribute("src", "/content/filters/img"+value+".png");
   }
   photoButton.removeAttribute("disabled");
-  submitupload.removeAttribute("disabled");
+  if (data_upload) {
+    submitupload.setAttribute("class", "submitbutton");
+    submitupload.removeAttribute("disabled");
   }
+  if (disabledError) {
+    submitupload.setAttribute("class", "submitbutton submitdisabled");
+    submitupload.disabled = true;
+  }
+}
 
-  //handle the upload button
-  uploadimg.addEventListener('change', function(e) {
-    let file = this.files[0];
-    let imageType = /image.*/;
-    if (file.type.match(imageType) && file.size < 1500000) {
-      let reader = new FileReader();
-      reader.addEventListener('load', function() {
-      data_upload = reader.result;
-    }, false);
-    reader.readAsDataURL(file);
+function changeLabel() {
+  label = document.getElementById('uploadimg').files[0].name;
+  document.getElementById('labeltext').innerHTML = label;
+}
+
+//handle the upload button eventlistener
+uploadimg.addEventListener('change', function(e) {
+  let file = this.files[0];
+  let imageType = /image.*/;
+  if (file.type.match(imageType) && file.size < 1500000) {
+    let reader = new FileReader();
+    reader.addEventListener('load', function() {
+    data_upload = reader.result;
+    if (filter_selected) {
+      submitupload.setAttribute("class", "submitbutton");
+      submitupload.removeAttribute("disabled");
+    }
+  }, false);
+  reader.readAsDataURL(file);
+  }
+  else {
+    document.getElementById('labeltext').innerHTML = "Mauvais format, ou fichier trop volumineux";
+    submitupload.setAttribute("class", "submitbutton submitdisabled");
+    submitupload.disabled = true;
+    disabledError = 1;
   }
 }, false);
 
 function deletePicture(id) {
   document.getElementById('delete_'+id).parentNode.remove();
   let xhr = new XMLHttpRequest();
-  xhr.open("GET", "/delete_picture.php?id_pic="+id, true);
+  xhr.open("GET", "/library/delete_picture.php?id_pic="+id, true);
   xhr.send();
 }

@@ -3,7 +3,7 @@
 $tmpimg = $_POST['picture'];
 $picture = imagecreatefromstring(base64_decode($tmpimg));
 $tmpfilter = $_POST['filter'];
-$filter = imagecreatefrompng("content/filters/img".$tmpfilter.".png");
+$filter = imagecreatefrompng(dirname(__DIR__)."/content/filters/img".$tmpfilter.".png");
 
 imagealphablending($filter, false);
 imagesavealpha($filter, true);

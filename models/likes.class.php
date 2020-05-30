@@ -8,7 +8,7 @@ class Likes extends databaseManager {
     private $pdo;
 
     public function __construct ($id, $user) {
-        $this->pdo = $this->db_connect();
+        $this->pdo = $this->databaseConnect();
         $this->id_img = $id;
         $this->img_username = $user;
     }
@@ -17,7 +17,7 @@ class Likes extends databaseManager {
         date_default_timezone_set('Europe/Paris');
     	$creation_date = date("Y-m-d H:i:s");
         $values = [$this->id_img, $this->img_username, $creation_date];
-        $this->insert_into(['id_picture', 'username', 'creation_date'], $values, 'likes');
+        $this->insertInto(['id_picture', 'username', 'creation_date'], $values, 'likes');
     }
 
     public function deleteLike() {
@@ -47,6 +47,7 @@ class Likes extends databaseManager {
 
     public function deleteAllLikes() {
         try {
+            var_dump($this->id_img);
             $query = $this->pdo->prepare("DELETE FROM `likes` WHERE `id_picture` = ?");
             $query->execute(array($this->id_img));
             $query->closeCursor();
