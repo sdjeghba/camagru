@@ -12,7 +12,7 @@
                                 <img id="imgsrc" class="pngfont" src="" alt="">
                                 <video id="video" autoplay></video>
                             </div>
-                            <canvas id="canvas" width="320px" height="240px"></canvas>
+                            <canvas id="canvas"></canvas>
                         </div>
                         <div class="row justify-content-center my-2">
                             <button id="photo-button" class="btn btn-primary mx-2" disabled>Capture</button>

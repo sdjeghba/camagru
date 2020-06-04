@@ -132,12 +132,12 @@ class databaseManager extends databaseInfo {
             $pdo->exec($likes);
               
         $comments = "CREATE TABLE IF NOT EXISTS `comments` (
-        `id_comment` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        `id_picture` INT UNSIGNED NOT NULL,
-        `comment` VARCHAR(255) NOT NULL,
-        `username` VARCHAR(30) NOT NULL,
-        `creation_date` DATETIME NOT NULL)";
-        $pdo->exec($comments);
+            `id_comment` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            `id_picture` INT UNSIGNED NOT NULL,
+            `comment` VARCHAR(255) NOT NULL,
+            `username` VARCHAR(30) NOT NULL,
+            `creation_date` DATETIME NOT NULL)";
+            $pdo->exec($comments);
 
     }
 

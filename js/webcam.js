@@ -200,6 +200,8 @@ uploadimg.addEventListener('change', function(e) {
     let reader = new FileReader();
     reader.addEventListener('load', function() {
     data_upload = reader.result;
+    file.style.height = '240px';
+    file.style.width = '320px';
     if (filter_selected) {
       submitupload.setAttribute("class", "submitbutton");
       submitupload.removeAttribute("disabled");

@@ -24,14 +24,14 @@ else: {
             $username = $_SESSION['username'];
             $user = new User($username, "", "");
             $newusername = htmlspecialchars($_POST['username']);
-            $pwd = password_hash(htmlspecialchars($_POST['pwd']), PASSWORD_DEFAULT);
+            $password_field = htmlspecialchars($_POST['pwd']);
+            $pwd = password_hash($password_field, PASSWORD_DEFAULT);
             $newmail = htmlspecialchars($_POST['email']);
             $notif_active = $user->getUserInformation($username, "notif");
             if (!empty($_POST['commail']))
                 $notif = htmlspecialchars($_POST['commail']);
             
             $password_error = htmlspecialchars(($_POST['pwd']) != htmlspecialchars($_POST['newpwd'])) ? 1 : $password_error;
-            var_dump($pwd);
             $password_error = $_POST['pwd'] && $user->securePwd($_POST['pwd']) == FALSE ? 2 : $password_error; 
             $pseudo_taken = $user->valueExist("username", $newusername, "users") ? 1 : $pseudo_taken;
             $mail_error = $user->valueExist("usrmail", $newmail, "users") ? 2 : $mail_error;
@@ -45,7 +45,8 @@ else: {
                 $newmail ? $user->updateUserInformation("usrmail", $newmail) : 0;
                 !empty($notif) && $notif === "yes" ? $user->updateUserInformation("notif", 1) : 0;
                 !empty($notif) && $notif === "no" ? $user->updateUserInformation("notif", 0) : 0;
-                $pwd ? $user->updateUserInformation("userpassword", $pwd) : 0;
+                var_dump($pwd);
+                $password_field ? $user->updateUserInformation("userpassword", $pwd) : 0;
                 if ($newusername) {
                     $data = new databaseManager();
                     $data->changeUsername($_SESSION['username'], $newusername);
