@@ -120,7 +120,7 @@ class databaseManager extends databaseInfo {
         $pictures = "CREATE TABLE IF NOT EXISTS `pictures` (
             `id_picture` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             `username` VARCHAR(30) NOT NULL,
-            `creation_date` DATETIME NOT NULL,
+            `creation_date` DOUBLE NOT NULL,
             `picture` LONGBLOB NOT NULL)";
             $pdo->exec($pictures);
 
